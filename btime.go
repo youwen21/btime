@@ -31,9 +31,7 @@ func TryOccupy(startTime string, endTime string, currentOccupy [5]uint64) (init 
  * timeBype[4] = 20-24时，<60*60*24 每5分钟一份，也就是小于300份
  * @return {[type]} [description]
  *
- * 当前问题 ，以5分钟取整 ，传入的时间必须是5分钟的整数倍
- * 如 9:00到9:16，当前是按9:00到9:15算
- * 如有需要，可以加入math函数，向上取整，可解决此问题
+ * 时间5分钟为单位，不能被5整除的，开始时间向下取整，结束时间向上取整
  *
  */
 func GetBinary(startTime string, endTime string) (init [5]uint64, err error) {
