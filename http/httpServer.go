@@ -12,8 +12,8 @@ import (
 )
 
 type resultS struct {
-	ret [5]uint64 `json:"ret"`
-	err int       `json:"err"`
+	Ret [5]uint64 `json:"ret"`
+	Err error     `json:"err"`
 }
 
 func main() {
@@ -37,30 +37,27 @@ func btimeService(w http.ResponseWriter, r *http.Request) {
 	var endTime string = ""
 	if len(r.Form["start"]) > 0 {
 		startTime = r.Form["start"][0]
-		w.Write([]byte("The time is: " + startTime))
 	} else {
 		w.Write([]byte("lost start param"))
 	}
 	if len(r.Form["end"]) > 0 {
 		endTime = r.Form["end"][0]
-		w.Write([]byte("The time is: " + endTime))
+		// w.Write([]byte("The time is: " + endTime))
 	}
 
 	data, err := btime.GetBinary(startTime, endTime)
 	if err != nil {
 		w.Write([]byte("有错误"))
 	}
-	result := resultS{}
-	result.ret = data
-	result.err = 0
-	fmt.Println("result is : ")
-	fmt.Println(result)
+	result := resultS{data, err}
+	// fmt.Println("result is : ")
+	// fmt.Println(result)
 	json, err := json.Marshal(result)
 	// w.Write([]byte("<Br/>"))
 	if err != nil {
 		w.Write([]byte("转json发生错误 "))
 	}
-	fmt.Println("json is : ")
-	fmt.Println(json)
+	// fmt.Println("json is : ")
+	// fmt.Println(json)
 	w.Write(json)
 }
