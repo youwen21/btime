@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package btimeGRPC;
+
+// The btime service definition.
+service btime {
+  rpc GetBinary (timeRequest) returns (binaryReply) {}
+}
+
+// The request message containing startTime and endTime.
+message timeRequest {
+  string startTime = 1;
+  string endTime = 2;
+}
+
+// The response message containing the Binary json
+message binaryReply {
+  string jsonMessage = 1;
+}
